@@ -1,26 +1,29 @@
 import { Gift, Copy } from 'lucide-react';
 import { useState } from 'react';
+import csgoSkinsLogo from '@/assets/sponsors/csgo-skins.png';
+import pirateSwapLogo from '@/assets/sponsors/pirate-swap.png';
+import { BRAND } from '@/lib/brand';
 
 const offers = [
   {
     id: 1,
     name: 'CSGO Skins',
-    logo: 'https://paulinhoeletric.com/logo-csgoskins-pq.webp',
-    bonus: 'R$ 3,00 + 10% de BÔNUS',
-    codeLabel: 'CÓDIGO',
-    code: 'PAULINHO',
-    url: 'https://csgo-skins.com/?ref=Paulinho',
-    bgGradient: 'from-primary/20 to-secondary/20',
+    logo: csgoSkinsLogo,
+    bonus: '10% de BÔNUS no depósito',
+    extra: 'e participe dos melhores sorteios',
+    codeLabel: 'CUPOM',
+    code: BRAND.coupon,
+    url: BRAND.csgoSkins,
   },
   {
     id: 2,
-    name: 'PirateSwap',
-    logo: 'https://paulinhoeletric.com/logo-pirateswap.svg',
-    bonus: '35% de BÔNUS',
+    name: 'Pirate Swap',
+    logo: pirateSwapLogo,
+    bonus: '35% de BÔNUS no depósito',
+    extra: 'Troca e venda de skins',
     codeLabel: 'CUPOM',
-    code: 'PAULINHO',
-    url: 'https://pirateswap.com/?ref=paulinho',
-    bgGradient: 'from-secondary/20 to-primary/20',
+    code: BRAND.coupon,
+    url: BRAND.pirateSwap,
   },
 ];
 
@@ -34,50 +37,40 @@ const Offers = () => {
   };
 
   return (
-    <section id="ofertas" className="py-20 md:py-28">
+    <section id="ofertas" className="py-16 md:py-24 bg-card/30">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
             <Gift className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Bônus Exclusivos</span>
+            <span className="text-sm font-medium text-primary">Cupom {BRAND.coupon}</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
-            Ofertas <span className="text-primary">Especiais</span>
+            Ofertas <span className="text-primary">exclusivas</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Aproveite os bônus exclusivos dos nossos patrocinadores
+            Bônus dos patrocinadores oficiais com o cupom {BRAND.coupon}
           </p>
         </div>
 
-        {/* Offers Grid */}
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {offers.map((offer) => (
-            <div
-              key={offer.id}
-              className="card-gaming overflow-hidden"
-            >
-              {/* Gradient Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${offer.bgGradient} opacity-50`} />
-              
+            <div key={offer.id} className="card-gaming overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-transparent opacity-60" />
+
               <div className="relative z-10">
-                {/* Logo */}
-                <div className="flex items-center justify-center mb-6">
+                <div className="flex items-center justify-center mb-6 -mx-2">
                   <img
                     src={offer.logo}
                     alt={offer.name}
-                    className="h-12 w-auto object-contain"
+                    className="w-full max-h-56 object-contain rounded-xl"
                   />
                 </div>
 
-                {/* Bonus Text */}
                 <div className="text-center mb-6">
-                  <p className="text-xl md:text-2xl font-bold text-foreground">
-                    {offer.bonus}
-                  </p>
+                  <p className="text-xl md:text-2xl font-bold text-foreground">{offer.bonus}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{offer.extra}</p>
                 </div>
 
-                {/* Code Box */}
                 <div className="mb-6">
                   <p className="text-xs text-muted-foreground text-center mb-2">
                     {offer.codeLabel}
@@ -96,14 +89,13 @@ const Offers = () => {
                   )}
                 </div>
 
-                {/* CTA Button */}
                 <a
                   href={offer.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gaming-primary w-full text-center block text-sm py-3"
                 >
-                  GARANTA SEU BÔNUS E PARTICIPE!
+                  Garantir bônus
                 </a>
               </div>
             </div>

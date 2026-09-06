@@ -48,8 +48,7 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         gaming: {
-          yellow: "hsl(var(--gaming-yellow))",
-          purple: "hsl(var(--gaming-purple))",
+          cyan: "hsl(var(--gaming-cyan))",
           dark: "hsl(var(--gaming-dark))",
           card: "hsl(var(--gaming-card))",
         },
@@ -70,7 +69,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['Nunito', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Rajdhani', 'Inter', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

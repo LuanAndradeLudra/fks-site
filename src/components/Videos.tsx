@@ -1,6 +1,7 @@
 import { Play, Youtube } from 'lucide-react';
 import { useYoutubeVideos } from '@/hooks/use-youtube-videos';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BRAND } from '@/lib/brand';
 
 const Videos = () => {
   const { data: videos, isLoading } = useYoutubeVideos({ limit: 6, videosOnly: true });
@@ -79,7 +80,7 @@ const Videos = () => {
         {/* Subscribe Button */}
         <div className="text-center mt-10">
           <a
-            href="https://youtube.com/@paulinhoeletric"
+            href={BRAND.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 bg-destructive text-white hover:bg-destructive/90"

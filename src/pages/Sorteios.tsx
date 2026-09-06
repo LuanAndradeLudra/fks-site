@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { fetchAllGiveaways, type GiveawayItem } from '@/lib/api';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import csgoSkinsLogo from '@/assets/csgo-skins-logo.png';
+import csgoSkinsLogo from '@/assets/sponsors/csgo-skins.png';
+import { BRAND } from '@/lib/brand';
 
 const formatCurrency = (valueInCents: number): string => {
   return new Intl.NumberFormat('pt-BR', {
@@ -86,7 +87,7 @@ const Sorteios = () => {
                 </div>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
-                Os sorteios são 100% automáticos e integrados à plataforma do CSGO-SKINS. Para participar, basta depositar utilizando o CUPOM PAULINHO no CSGO-SKINS. Cada depósito gera novas entradas no sorteio, ou seja, quanto mais você deposita, maiores são suas chances de ganhar. O sistema registra tudo automaticamente, escolhe o vencedor de forma transparente e envia o prêmio na hora.
+                Os sorteios são 100% automáticos e integrados à plataforma do CSGO-SKINS. Para participar, basta depositar utilizando o CUPOM {BRAND.coupon} no CSGO-SKINS. Cada depósito gera novas entradas no sorteio, ou seja, quanto mais você deposita, maiores são suas chances de ganhar. O sistema registra tudo automaticamente, escolhe o vencedor de forma transparente e envia o prêmio na hora.
               </p>
             </div>
           </div>
@@ -187,7 +188,7 @@ const Sorteios = () => {
                 return (
                   <a
                     key={giveaway.id}
-                    href="https://csgo-skins.com/?ref=Paulinho"
+                    href={BRAND.csgoSkins}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="card-gaming group overflow-hidden block cursor-pointer hover:scale-[1.02] transition-transform duration-300"
@@ -281,7 +282,7 @@ const Sorteios = () => {
           {/* CTA */}
           <div className="text-center mt-12">
             <a
-              href="https://csgo-skins.com/?ref=Paulinho"
+              href={BRAND.csgoSkins}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gaming-primary inline-flex items-center gap-2"

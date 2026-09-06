@@ -1,6 +1,8 @@
 import { Award, TrendingUp, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchAllGiveaways, type GiveawayItem } from '@/lib/api';
+import { BRAND } from '@/lib/brand';
 
 const formatCurrency = (valueInCents: number): string => {
   return new Intl.NumberFormat('pt-BR', {
@@ -50,7 +52,7 @@ const Giveaways = () => {
   }, [reloadTick]);
 
   return (
-    <section id="sorteios" className="py-20 md:py-28 bg-card/30">
+    <section id="sorteios" className="py-20 md:py-28">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -59,7 +61,7 @@ const Giveaways = () => {
             <span className="text-sm font-medium text-primary">Prêmios Incríveis</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
-            Sorteios <span className="text-primary">Populares</span>
+            Sorteios <span className="text-primary">em destaque</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Confira os sorteios mais populares do momento
@@ -157,7 +159,7 @@ const Giveaways = () => {
 
                     {isActive && (
                       <a
-                        href="https://csgo-skins.com/?ref=Paulinho"
+                        href={BRAND.csgoSkins}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-gaming-primary w-full text-center block text-xs py-2.5 mt-4"
@@ -200,15 +202,13 @@ const Giveaways = () => {
 
         {/* View All Button */}
         <div className="text-center mt-10">
-          <a
-            href="https://csgo-skins.com/?ref=Paulinho"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/sorteios"
             className="btn-gaming-outline inline-flex items-center gap-2 text-sm py-3 px-6"
           >
             <TrendingUp className="w-4 h-4" />
-            Ver Todos os Sorteios
-          </a>
+            Ver todos os sorteios
+          </Link>
         </div>
       </div>
     </section>

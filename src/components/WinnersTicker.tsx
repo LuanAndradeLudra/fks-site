@@ -60,7 +60,7 @@ const WinnersTicker = () => {
   };
 
   return (
-    <section className="mt-20 py-4 bg-gradient-to-r from-background via-card/50 to-background border-y border-border/50 overflow-hidden">
+    <section className="py-3 bg-gradient-to-r from-background via-card/60 to-background border-y border-primary/15 overflow-hidden">
       <div className="flex items-center">
         {/* Label */}
         <div className="flex-shrink-0 flex items-center gap-3 px-6 py-3 bg-primary/10 border-r border-primary/30 z-10">

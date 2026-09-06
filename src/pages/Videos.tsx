@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { useYoutubeVideos } from '@/hooks/use-youtube-videos';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BRAND } from '@/lib/brand';
 
 const VideoCard = ({ video, isShortLayout = false }: { video: any; isShortLayout?: boolean }) => (
   <a
@@ -71,10 +72,10 @@ const Videos = () => {
               <span className="text-sm font-medium text-destructive">YouTube</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4">
-              Meus <span className="text-primary">Vídeos</span>
+              Vídeos do <span className="text-primary">{BRAND.name}</span>
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Confira todos os vídeos do canal Paulinho Eletric
+              Confira os vídeos do canal {BRAND.name} ({BRAND.handle})
             </p>
           </div>
 
@@ -101,10 +102,10 @@ const Videos = () => {
             </div>
             
             <div className="card-gaming text-center py-4">
-              <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center mx-auto mb-2">
-                <Zap className="w-5 h-5 text-orange-500" />
+              <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-2">
+                <Zap className="w-5 h-5 text-secondary" />
               </div>
-              <div className="text-2xl font-black text-orange-500">
+              <div className="text-2xl font-black text-secondary">
                 {loadingShorts ? '...' : shorts?.length || 0}
               </div>
               <div className="text-xs text-muted-foreground">Shorts</div>
@@ -166,7 +167,7 @@ const Videos = () => {
           {/* Subscribe Button */}
           <div className="text-center mt-12">
             <a
-              href="https://youtube.com/@paulinhoeletric"
+              href={BRAND.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 bg-destructive text-white hover:bg-destructive/90"
