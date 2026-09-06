@@ -1,13 +1,13 @@
-import { Award, TrendingUp, Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchAllGiveaways, type GiveawayItem } from '@/lib/api';
-import { BRAND } from '@/lib/brand';
+import { Award, TrendingUp, Loader2, Circle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchAllGiveaways, type GiveawayItem } from "@/lib/api";
+import { BRAND } from "@/lib/brand";
 
 const formatCurrency = (valueInCents: number): string => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
   }).format(valueInCents / 100);
 };
 
@@ -23,7 +23,7 @@ const Giveaways = () => {
         setLoading(true);
         setError(null);
 
-        const gifts = await fetchAllGiveaways('BRL');
+        const gifts = await fetchAllGiveaways("BRL");
 
         if (gifts.length > 0) {
           setGiveaways(gifts.slice(0, 12));
@@ -32,18 +32,24 @@ const Giveaways = () => {
         }
 
         if (retryCount < 3) {
-          setTimeout(() => loadGiveaways(retryCount + 1), 1000 * (retryCount + 1));
+          setTimeout(
+            () => loadGiveaways(retryCount + 1),
+            1000 * (retryCount + 1),
+          );
           return;
         }
-        setError('Nenhum sorteio encontrado');
+        setError("Nenhum sorteio encontrado");
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching giveaways:', err);
+        console.error("Error fetching giveaways:", err);
         if (retryCount < 3) {
-          setTimeout(() => loadGiveaways(retryCount + 1), 1000 * (retryCount + 1));
+          setTimeout(
+            () => loadGiveaways(retryCount + 1),
+            1000 * (retryCount + 1),
+          );
           return;
         }
-        setError('Erro ao carregar sorteios');
+        setError("Erro ao carregar sorteios");
         setLoading(false);
       }
     };
@@ -52,106 +58,131 @@ const Giveaways = () => {
   }, [reloadTick]);
 
   return (
-    <section id="sorteios" className="py-20 md:py-28">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-            <Award className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Prêmios Incríveis</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
-            Sorteios <span className="text-primary">em destaque</span>
+    <section id="sorteios" className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16 md:mb-20">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight">
+            Sorteios{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
+              em destaque
+            </span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Confira os sorteios mais populares do momento
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+            Skins lendárias e prêmios exclusivos esperando por você.
           </p>
         </div>
 
-        {/* Loading State */}
         {loading && (
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <div className="flex justify-center items-center py-32">
+            <Loader2 className="w-12 h-12 animate-spin text-primary drop-shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
           </div>
         )}
 
-        {/* Error State */}
         {error && !loading && (
-          <div className="text-center py-10">
-            <p className="text-muted-foreground">{error}</p>
+          <div className="text-center py-20 bg-background/50 backdrop-blur-sm rounded-2xl border border-destructive/20 max-w-md mx-auto">
+            <p className="text-muted-foreground mb-6">{error}</p>
             <button
               type="button"
               onClick={() => setReloadTick((v) => v + 1)}
-              className="btn-gaming-outline mt-6 inline-flex items-center gap-2 text-sm py-3 px-6"
+              className="btn-gaming-outline inline-flex items-center gap-2 text-sm py-3 px-8 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 transition-colors"
             >
               Tentar novamente
             </button>
           </div>
         )}
 
-        {/* Giveaways Grid */}
         {!loading && !error && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
             {giveaways.map((giveaway) => {
               const isActive = giveaway.winner === null;
-              // Parse color safely
-              const colorParts = giveaway.item.color?.split(',').map(Number) || [235, 75, 75];
-              const [r, g, b] = colorParts.length >= 3 ? colorParts : [235, 75, 75];
-              
+              const colorParts = giveaway.item.color
+                ?.split(",")
+                .map(Number) || [235, 75, 75];
+              const [r, g, b] =
+                colorParts.length >= 3 ? colorParts : [235, 75, 75];
+              const rgbString = `${r}, ${g}, ${b}`;
+
               return (
                 <div
                   key={giveaway.id}
-                  className="card-gaming group overflow-hidden"
+                  className="group relative flex flex-col rounded-2xl bg-background/60 backdrop-blur-md border border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-white/20 z-10"
+                  style={{
+                    boxShadow: `0 0 40px -15px rgba(${rgbString}, 0.0)`,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `0 15px 40px -10px rgba(${rgbString}, 0.25)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = `0 0 40px -15px rgba(${rgbString}, 0.0)`;
+                  }}
                 >
-                  {/* Status Badge */}
-                  <div className="absolute top-4 right-4 z-10">
+                  <div
+                    className="absolute inset-x-0 top-0 h-48 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"
+                    style={{
+                      background: `radial-gradient(circle at 50% 0%, rgba(${rgbString}, 0.2), transparent 70%)`,
+                    }}
+                  />
+
+                  <div className="absolute top-4 right-4 z-20">
                     {isActive ? (
-                      <span className="status-badge-active">Ativo</span>
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-green-500/30 text-xs font-bold text-green-400 shadow-[0_0_10px_rgba(74,222,128,0.2)]">
+                        <Circle className="w-2 h-2 fill-current animate-pulse" />
+                        Ativo
+                      </div>
                     ) : (
-                      <span className="status-badge-finished">Finalizado</span>
+                      <div className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs font-bold text-muted-foreground">
+                        Finalizado
+                      </div>
                     )}
                   </div>
 
-                  {/* Image */}
-                  <div 
-                    className="relative h-48 flex items-center justify-center mb-4 rounded-lg overflow-hidden bg-background/50"
+                  <div
+                    className="relative h-56 flex items-center justify-center p-6 overflow-hidden"
                     style={{
-                      background: `linear-gradient(135deg, rgba(${r},${g},${b},0.2) 0%, rgba(${r},${g},${b},0.05) 100%)`
+                      background: `linear-gradient(180deg, rgba(${rgbString},0.15) 0%, rgba(${rgbString},0.02) 100%)`,
                     }}
                   >
                     <img
                       src={giveaway.item.image}
                       alt={giveaway.item.name}
-                      className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
+                      className="relative z-10 max-h-full max-w-full object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:scale-110 group-hover:-rotate-2 group-hover:drop-shadow-[0_15px_25px_rgba(0,0,0,0.7)]"
                       loading="lazy"
                       onError={(e) => {
                         const img = e.currentTarget;
-                        if (img.dataset.fallbackApplied === 'true') return;
-                        img.dataset.fallbackApplied = 'true';
-                        img.src = '/placeholder.svg';
+                        if (img.dataset.fallbackApplied === "true") return;
+                        img.dataset.fallbackApplied = "true";
+                        img.src = "/placeholder.svg";
                       }}
                     />
                   </div>
 
-                  {/* Content */}
-                  <div>
-                    <h3 className="font-bold text-sm mb-3 line-clamp-2 min-h-[2.5rem]">
+                  <div className="p-6 flex flex-col flex-grow bg-gradient-to-t from-background via-background/95 to-transparent relative z-20">
+                    <h3 className="font-bold text-base mb-4 line-clamp-2 min-h-[3rem] text-foreground/90 group-hover:text-foreground transition-colors">
                       {giveaway.item.name}
                     </h3>
 
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">Valor</span>
-                        <span 
-                          className="font-bold"
-                          style={{ color: `rgb(${r},${g},${b})` }}
-                        >
-                          {formatCurrency(giveaway.convertedValue)}
-                        </span>
+                    <div className="space-y-3 mt-auto">
+                      <div className="flex items-end justify-between p-3 rounded-xl bg-black/40 border border-white/5 group-hover:border-white/10 transition-colors">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold mb-1">
+                            Valor Estimado
+                          </span>
+                          <span
+                            className="text-lg font-black tracking-tight"
+                            style={{ color: `rgb(${rgbString})` }}
+                          >
+                            {formatCurrency(giveaway.convertedValue)}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">Depósito mínimo</span>
-                        <span className="text-sm text-foreground">
+
+                      <div className="flex items-center justify-between px-2">
+                        <span className="text-xs text-muted-foreground font-medium">
+                          Depósito mínimo
+                        </span>
+                        <span className="text-sm font-bold text-foreground/80">
                           {formatCurrency(giveaway.convertedMinDepositValue)}
                         </span>
                       </div>
@@ -162,28 +193,40 @@ const Giveaways = () => {
                         href={BRAND.csgoSkins}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-gaming-primary w-full text-center block text-xs py-2.5 mt-4"
+                        className="mt-6 w-full relative overflow-hidden rounded-lg font-bold text-sm py-3 flex items-center justify-center text-white transition-all duration-300 group/btn"
+                        style={{
+                          background: `linear-gradient(90deg, rgba(${rgbString}, 0.8), rgba(${rgbString}, 1))`,
+                          boxShadow: `0 4px 15px rgba(${rgbString}, 0.3)`,
+                        }}
                       >
-                        Participar
+                        <span className="relative z-10 flex items-center gap-2">
+                          Participar Agora
+                        </span>
+                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
                       </a>
                     )}
 
                     {!isActive && giveaway.winner && (
-                      <div className="mt-4 flex items-center gap-2 p-2 rounded-lg bg-background/50">
+                      <div className="mt-6 flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
                         <img
                           src={giveaway.winner.avatar}
                           alt={giveaway.winner.name}
-                          className="w-6 h-6 rounded-full"
+                          className="w-8 h-8 rounded-full border border-white/20"
                           onError={(e) => {
                             const img = e.currentTarget;
-                            if (img.dataset.fallbackApplied === 'true') return;
-                            img.dataset.fallbackApplied = 'true';
-                            img.src = '/placeholder.svg';
+                            if (img.dataset.fallbackApplied === "true") return;
+                            img.dataset.fallbackApplied = "true";
+                            img.src = "/placeholder.svg";
                           }}
                         />
-                        <span className="text-xs text-muted-foreground truncate">
-                          Vencedor: {giveaway.winner.name}
-                        </span>
+                        <div className="flex flex-col overflow-hidden">
+                          <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">
+                            Vencedor
+                          </span>
+                          <span className="text-sm font-bold text-foreground truncate">
+                            {giveaway.winner.name}
+                          </span>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -192,24 +235,6 @@ const Giveaways = () => {
             })}
           </div>
         )}
-
-        {/* Empty State */}
-        {!loading && !error && giveaways.length === 0 && (
-          <div className="text-center py-10">
-            <p className="text-muted-foreground">Nenhum sorteio disponível no momento</p>
-          </div>
-        )}
-
-        {/* View All Button */}
-        <div className="text-center mt-10">
-          <Link
-            to="/sorteios"
-            className="btn-gaming-outline inline-flex items-center gap-2 text-sm py-3 px-6"
-          >
-            <TrendingUp className="w-4 h-4" />
-            Ver todos os sorteios
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -1,35 +1,37 @@
 import { Sparkles, Trophy } from "lucide-react";
-import banner from "@/assets/banner.jpg";
+import bannerRender from "@/assets/hero.png";
 import { BRAND } from "@/lib/brand";
 
 const Hero = () => {
   return (
     <section
       id="inicio"
-      className="relative pt-16 md:pt-[4.5rem] overflow-hidden"
+      className="relative w-full min-h-[500px] md:min-h-[700px] flex items-center overflow-hidden"
     >
-      <div className="relative w-full">
+      <div className="absolute inset-0 z-0">
         <img
-          src={banner}
+          src={bannerRender}
           alt={`${BRAND.name} ${BRAND.handle}`}
-          className="w-full h-[220px] sm:h-[280px] md:h-[340px] lg:h-[400px] object-cover object-center"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 md:via-background/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 -mt-10 md:-mt-14 pb-16 md:pb-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight">
-            {BRAND.tagline}
+      <div className="container mx-auto px-4 relative z-10 py-12 md:py-20">
+        <div className="max-w-2xl text-left">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black mb-4 leading-tight">
+            A CAIXA TE COMEU?
+            <br />O FKS TE DEVOLVE.
           </h1>
 
-          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
             Use o cupom{" "}
             <span className="text-primary font-bold">{BRAND.coupon}</span> nos
             patrocinadores, entre nos sorteios e recupere o que a caixa comeu.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start">
             <a
               href="#ofertas"
               className="btn-gaming-primary flex items-center justify-center gap-2"
@@ -44,9 +46,9 @@ const Hero = () => {
             </a>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mt-12 max-w-md mx-auto">
+          <div className="flex flex-wrap gap-8 md:gap-12 mt-12 max-w-lg">
             <div>
-              <div className="text-2xl md:text-3xl font-black text-primary font-display">
+              <div className="text-3xl md:text-4xl font-black text-primary font-display">
                 500+
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">
@@ -54,7 +56,7 @@ const Hero = () => {
               </div>
             </div>
             <div>
-              <div className="text-2xl md:text-3xl font-black text-primary font-display">
+              <div className="text-3xl md:text-4xl font-black text-primary font-display">
                 50K+
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">
@@ -62,7 +64,7 @@ const Hero = () => {
               </div>
             </div>
             <div>
-              <div className="text-2xl md:text-3xl font-black text-primary font-display">
+              <div className="text-3xl md:text-4xl font-black text-primary font-display">
                 R$ 100K+
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">

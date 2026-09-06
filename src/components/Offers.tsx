@@ -1,27 +1,27 @@
-import { Gift, Copy } from 'lucide-react';
-import { useState } from 'react';
-import csgoSkinsLogo from '@/assets/sponsors/csgo-skins.png';
-import pirateSwapLogo from '@/assets/sponsors/pirate-swap.png';
-import { BRAND } from '@/lib/brand';
+import { Gift, Copy } from "lucide-react";
+import { useState } from "react";
+import csgoSkinsLogo from "@/assets/sponsors/csgo-skins.png";
+import pirateSwapLogo from "@/assets/sponsors/pirate-swap.png";
+import { BRAND } from "@/lib/brand";
 
 const offers = [
   {
     id: 1,
-    name: 'CSGO Skins',
+    name: "CSGO Skins",
     logo: csgoSkinsLogo,
-    bonus: '10% de BÔNUS no depósito',
-    extra: 'e participe dos melhores sorteios',
-    codeLabel: 'CUPOM',
+    bonus: "10% de BÔNUS no depósito",
+    extra: "e participe dos melhores sorteios",
+    codeLabel: "CUPOM",
     code: BRAND.coupon,
     url: BRAND.csgoSkins,
   },
   {
     id: 2,
-    name: 'Pirate Swap',
+    name: "Pirate Swap",
     logo: pirateSwapLogo,
-    bonus: '35% de BÔNUS no depósito',
-    extra: 'Troca e venda de skins',
-    codeLabel: 'CUPOM',
+    bonus: "35% de BÔNUS no depósito",
+    extra: "Troca e venda de skins",
+    codeLabel: "CUPOM",
     code: BRAND.coupon,
     url: BRAND.pirateSwap,
   },
@@ -40,15 +40,11 @@ const Offers = () => {
     <section id="ofertas" className="py-16 md:py-24 bg-card/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-            <Gift className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Cupom {BRAND.coupon}</span>
-          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
-            Ofertas <span className="text-primary">exclusivas</span>
+            Use o cupom <span className="text-primary">{BRAND.coupon}</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Bônus dos patrocinadores oficiais com o cupom {BRAND.coupon}
+            Aumente suas chances de ganhar com o cupom {BRAND.coupon}
           </p>
         </div>
 
@@ -67,8 +63,12 @@ const Offers = () => {
                 </div>
 
                 <div className="text-center mb-6">
-                  <p className="text-xl md:text-2xl font-bold text-foreground">{offer.bonus}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{offer.extra}</p>
+                  <p className="text-xl md:text-2xl font-bold text-foreground">
+                    {offer.bonus}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {offer.extra}
+                  </p>
                 </div>
 
                 <div className="mb-6">
