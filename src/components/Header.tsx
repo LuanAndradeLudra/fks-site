@@ -1,8 +1,21 @@
-import { useState, useEffect } from "react";
-import { Menu, X, ChevronRight } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/logo.jpg";
-import { BRAND } from "@/lib/brand";
+import { useState, useEffect } from 'react';
+import { Menu, X, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import logo from '@/assets/logo.jpg';
+import { BRAND } from '@/lib/brand';
+
+const TwitchIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
+  </svg>
+);
+
+const socialLinks = [
+  { label: 'Instagram', href: BRAND.socials.instagram.url, icon: Instagram },
+  { label: 'Twitter', href: BRAND.socials.twitter.url, icon: Twitter },
+  { label: 'Twitch', href: BRAND.socials.twitch.url, icon: TwitchIcon },
+  { label: 'YouTube', href: BRAND.youtube, icon: Youtube },
+];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,131 +24,129 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isMenuOpen]);
 
   const navLinks = [
-    { href: "/", label: "Início" },
-    { href: "/sorteios", label: "Sorteios" },
-    { href: "/parceiros", label: "Parceiros" },
-    { href: "/videos", label: "Vídeos" },
+    { href: '/', label: 'Início' },
+    { href: '/sorteios', label: 'Sorteios' },
+    { href: '/parceiros', label: 'Parceiros' },
+    { href: '/videos', label: 'Vídeos' },
   ];
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 border-b border-primary/10 bg-background
-        ${scrolled ? "shadow-lg shadow-black/50" : ""}
+      className={`sticky top-0 z-50 w-full transition-all duration-300 border-b border-border/40 bg-background/80 backdrop-blur-md
+        ${scrolled ? 'bg-background/95 shadow-sm shadow-black/20' : ''}
       `}
     >
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center h-20">
-          <Link
-            to="/"
-            className="flex items-center gap-3 justify-self-start group"
-          >
-            <div className="relative overflow-hidden rounded-lg ring-2 ring-primary/20 group-hover:ring-primary/50 transition-all">
-              <img
-                src={logo}
-                alt={BRAND.name}
-                className="w-10 h-10 md:w-12 md:h-12 object-cover transition-transform group-hover:scale-105"
-              />
-            </div>
-            <span className="text-2xl md:text-3xl font-black tracking-tight font-display leading-none group-hover:text-primary transition-colors">
+        <div className="grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center h-16 md:h-[4.5rem]">
+          <Link to="/" className="flex items-center gap-2.5 justify-self-start group">
+            <img
+              src={logo}
+              alt={BRAND.name}
+              className="w-8 h-8 md:w-9 md:h-9 rounded-md object-cover ring-1 ring-border group-hover:ring-primary/40 transition-all"
+            />
+            <span className="text-lg md:text-xl font-black tracking-tight font-display leading-none text-foreground/90 group-hover:text-primary transition-colors">
               {BRAND.name}
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 h-full">
+          <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`relative flex items-center h-full text-sm font-bold uppercase tracking-widest transition-colors group
-                    ${isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"}
+                  className={`px-3 py-1.5 text-sm font-medium tracking-wide transition-colors rounded-md
+                    ${
+                      isActive
+                        ? 'text-primary'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }
                   `}
                 >
                   {link.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[3px] w-full bg-primary rounded-t-md transition-transform duration-300 origin-left
-                      ${isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50"}
-                    `}
-                  />
                 </Link>
               );
             })}
           </nav>
 
-          <div className="hidden md:flex justify-self-end">
-            <Link
-              to="/sorteios"
-              className="btn-gaming-primary text-sm py-2.5 px-8 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-0.5"
-            >
-              Participar
-            </Link>
+          <div className="hidden md:flex items-center gap-1 justify-self-end">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="w-9 h-9 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              >
+                <social.icon className="w-4 h-4" />
+              </a>
+            ))}
           </div>
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative z-50 p-2 text-foreground justify-self-end rounded-md hover:bg-white/5 transition-colors"
-            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors justify-self-end"
+            aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
           >
-            {isMenuOpen ? (
-              <X size={28} className="text-primary" />
-            ) : (
-              <Menu size={28} />
-            )}
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
-      <div
-        className={`md:hidden fixed inset-0 top-20 bg-background/95 backdrop-blur-xl border-t border-white/5 transition-all duration-300 ease-in-out origin-top
-          ${isMenuOpen ? "opacity-100 pointer-events-auto flex flex-col" : "opacity-0 pointer-events-none hidden"}
-        `}
-      >
-        <nav className="container mx-auto px-4 py-8 flex flex-col gap-4">
-          {navLinks.map((link) => {
-            const isActive = location.pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center justify-between p-4 rounded-xl font-bold text-lg uppercase tracking-wider transition-all
-                  ${
-                    isActive
-                      ? "text-primary bg-primary/10 ring-1 ring-primary/30"
-                      : "text-muted-foreground bg-white/5 hover:bg-white/10 hover:text-foreground"
-                  }
-                `}
-              >
-                {link.label}
-                {isActive && (
-                  <ChevronRight size={20} className="text-primary" />
-                )}
-              </Link>
-            );
-          })}
+      {isMenuOpen && (
+        <nav className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur-md animate-fade-in">
+          <div className="container mx-auto px-4 py-3 flex flex-col gap-0.5">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`px-3 py-2.5 text-sm font-medium rounded-md transition-colors
+                    ${
+                      isActive
+                        ? 'text-primary bg-primary/5'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                    }
+                  `}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
 
-          <div className="mt-8 pt-8 border-t border-white/10">
-            <Link
-              to="/sorteios"
-              onClick={() => setIsMenuOpen(false)}
-              className="btn-gaming-primary w-full text-center py-4 text-lg shadow-lg shadow-primary/20"
-            >
-              Participar Agora
-            </Link>
+            <div className="flex items-center gap-1 pt-3 mt-2 border-t border-border/40">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-md flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </nav>
-      </div>
+      )}
     </header>
   );
 };
