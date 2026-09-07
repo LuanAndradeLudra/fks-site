@@ -1,4 +1,4 @@
-import { Sparkles, Trophy } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import bannerRender from "@/assets/hero.png";
 import { BRAND } from "@/lib/brand";
 
@@ -6,70 +6,85 @@ const Hero = () => {
   return (
     <section
       id="inicio"
-      className="relative w-full min-h-[500px] md:min-h-[700px] flex items-center overflow-hidden"
+      className="relative w-full min-h-[700px] lg:min-h-[850px] flex items-center justify-center overflow-hidden"
     >
+      {/* Background Image & Overlays */}
       <div className="absolute inset-0 z-0">
         <img
           src={bannerRender}
           alt={`${BRAND.name} ${BRAND.handle}`}
           className="w-full h-full object-cover object-center"
+          fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 md:via-background/30 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+
+        {/* Camada para escurecer a imagem e garantir a leitura do texto central */}
+        <div className="absolute inset-0 bg-background/80 md:bg-background/70 backdrop-blur-[2px]" />
+
+        {/* Brilho (Glow) Central na cor primária para destacar o conteúdo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/20 rounded-full blur-[100px] md:blur-[150px] pointer-events-none" />
+
+        {/* Gradiente inferior para fundir com a próxima seção */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 py-12 md:py-20">
-        <div className="max-w-2xl text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black mb-4 leading-tight">
-            A CAIXA TE COMEU?
-            <br />O FKS TE DEVOLVE.
-          </h1>
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10 py-20 flex flex-col items-center text-center mt-10">
+        {/* Título */}
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 leading-tight max-w-4xl tracking-tight">
+          A Valve nunca vai te dar uma Dragon Lore.
+          <br />
+          <span className="text-primary drop-shadow-[0_0_20px_rgba(var(--primary),0.4)]">
+            Mas a gente pode.
+          </span>
+        </h1>
 
-          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
-            Use o cupom{" "}
-            <span className="text-primary font-bold">{BRAND.coupon}</span> nos
-            patrocinadores, entre nos sorteios e recupere o que a caixa comeu.
-          </p>
+        {/* Subtítulo */}
+        <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+          Abra suas caixas no site certo. Cada depósito te coloca
+          automaticamente nos maiores sorteios de skins do Brasil — 100%
+          transparente, em tempo real.
+        </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-start">
-            <a
-              href="#ofertas"
-              className="btn-gaming-primary flex items-center justify-center gap-2"
-            >
-              Patrocinadores
-            </a>
-            <a
-              href="#sorteios"
-              className="btn-gaming-outline flex items-center justify-center gap-2"
-            >
+        {/* Botões */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto mb-16">
+          <a
+            href="#ofertas"
+            className="btn-gaming-primary flex items-center justify-center gap-2 min-w-[200px]"
+          >
+            Patrocinadores
+          </a>
+          <a
+            href="#sorteios"
+            className="btn-gaming-outline flex items-center justify-center gap-2 min-w-[200px] bg-background/50 backdrop-blur-sm"
+          >
+            Sorteios
+          </a>
+        </div>
+
+        {/* Estatísticas */}
+        <div className="flex flex-wrap justify-center gap-10 md:gap-20 max-w-3xl border-t border-white/10 pt-10">
+          <div className="flex flex-col items-center">
+            <div className="text-3xl md:text-4xl font-black text-primary font-display drop-shadow-[0_0_15px_rgba(var(--primary),0.3)]">
+              500+
+            </div>
+            <div className="text-xs md:text-sm text-muted-foreground font-semibold tracking-wider uppercase mt-1">
               Sorteios
-            </a>
+            </div>
           </div>
-
-          <div className="flex flex-wrap gap-8 md:gap-12 mt-12 max-w-lg">
-            <div>
-              <div className="text-3xl md:text-4xl font-black text-primary font-display">
-                500+
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Sorteios
-              </div>
+          <div className="flex flex-col items-center">
+            <div className="text-3xl md:text-4xl font-black text-primary font-display drop-shadow-[0_0_15px_rgba(var(--primary),0.3)]">
+              1000+
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-black text-primary font-display">
-                50K+
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Participantes
-              </div>
+            <div className="text-xs md:text-sm text-muted-foreground font-semibold tracking-wider uppercase mt-1">
+              Ganhadores
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-black text-primary font-display">
-                R$ 100K+
-              </div>
-              <div className="text-xs md:text-sm text-muted-foreground">
-                Em prêmios
-              </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-3xl md:text-4xl font-black text-primary font-display drop-shadow-[0_0_15px_rgba(var(--primary),0.3)]">
+              R$1.000.000,00+
+            </div>
+            <div className="text-xs md:text-sm text-muted-foreground font-semibold tracking-wider uppercase mt-1">
+              Em skins
             </div>
           </div>
         </div>
