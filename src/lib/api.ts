@@ -95,10 +95,8 @@ export async function fetchYoutubeVideos(options?: {
 }): Promise<YoutubeVideo[]> {
   const params: Record<string, string> = {
     maxResults: String(options?.maxResults ?? 6),
+    includeShorts: options?.includeShorts === false ? 'false' : 'true',
   };
-  if (options?.includeShorts) {
-    params.includeShorts = 'true';
-  }
 
   const data = await getJson<{ videos?: YoutubeVideo[] }>(
     buildUrl(`/api/${TENANT}/youtube/videos`, params),
