@@ -12,7 +12,6 @@ const Hero = () => {
           src={bannerRender}
           alt={`${BRAND.name} ${BRAND.handle}`}
           className="w-full h-full object-cover object-center md:object-right"
-          fetchPriority="high"
         />
 
         <div className="absolute inset-0 bg-background/80 md:bg-transparent" />
