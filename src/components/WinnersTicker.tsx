@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Trophy } from 'lucide-react';
 import { fetchDepositGifts } from '@/lib/api';
+import SkinImage from '@/components/SkinImage';
 
 interface Winner {
   id: string;
@@ -91,10 +92,10 @@ const WinnersTicker = () => {
               >
                 {/* Skin Image */}
                 <div className="relative w-16 h-12 flex-shrink-0">
-                  {winner.item_image ? (
-                    <img
-                      src={winner.item_image}
-                      alt={winner.item_name}
+                  {winner.item_image || winner.item_name ? (
+                    <SkinImage
+                      name={winner.item_name}
+                      image={winner.item_image}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                   ) : (
@@ -112,6 +113,10 @@ const WinnersTicker = () => {
                         src={winner.winner_avatar}
                         alt={winner.winner_name || 'Ganhador'}
                         className="w-5 h-5 rounded-full object-cover flex-shrink-0"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     ) : (
                       <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
@@ -142,10 +147,10 @@ const WinnersTicker = () => {
               >
                 {/* Skin Image */}
                 <div className="relative w-16 h-12 flex-shrink-0">
-                  {winner.item_image ? (
-                    <img
-                      src={winner.item_image}
-                      alt={winner.item_name}
+                  {winner.item_image || winner.item_name ? (
+                    <SkinImage
+                      name={winner.item_name}
+                      image={winner.item_image}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                   ) : (
@@ -163,6 +168,10 @@ const WinnersTicker = () => {
                         src={winner.winner_avatar}
                         alt={winner.winner_name || 'Ganhador'}
                         className="w-5 h-5 rounded-full object-cover flex-shrink-0"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     ) : (
                       <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center flex-shrink-0">

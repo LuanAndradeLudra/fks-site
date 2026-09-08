@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchAllGiveaways, type GiveawayItem } from "@/lib/api";
 import { BRAND } from "@/lib/brand";
+import SkinImage from "@/components/SkinImage";
 
 const formatCurrency = (valueInCents: number): string => {
   return new Intl.NumberFormat("pt-BR", {
@@ -144,17 +145,10 @@ const Giveaways = () => {
                       background: `linear-gradient(180deg, rgba(${rgbString},0.15) 0%, rgba(${rgbString},0.02) 100%)`,
                     }}
                   >
-                    <img
-                      src={giveaway.item.image}
-                      alt={giveaway.item.name}
+                    <SkinImage
+                      name={giveaway.item.name}
+                      image={giveaway.item.image}
                       className="relative z-10 max-h-full max-w-full object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:scale-110 group-hover:-rotate-2 group-hover:drop-shadow-[0_15px_25px_rgba(0,0,0,0.7)]"
-                      loading="lazy"
-                      onError={(e) => {
-                        const img = e.currentTarget;
-                        if (img.dataset.fallbackApplied === "true") return;
-                        img.dataset.fallbackApplied = "true";
-                        img.src = "/placeholder.svg";
-                      }}
                     />
                   </div>
 
@@ -212,6 +206,7 @@ const Giveaways = () => {
                           src={giveaway.winner.avatar}
                           alt={giveaway.winner.name}
                           className="w-8 h-8 rounded-full border border-white/20"
+                          referrerPolicy="no-referrer"
                           onError={(e) => {
                             const img = e.currentTarget;
                             if (img.dataset.fallbackApplied === "true") return;

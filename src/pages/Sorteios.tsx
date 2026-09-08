@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchAllGiveaways, type GiveawayItem } from '@/lib/api';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SkinImage from '@/components/SkinImage';
 import csgoSkinsLogo from '@/assets/sponsors/csgo-skins.png';
 import { BRAND } from '@/lib/brand';
 
@@ -209,17 +210,10 @@ const Sorteios = () => {
                         background: `linear-gradient(135deg, rgba(${r},${g},${b},0.2) 0%, rgba(${r},${g},${b},0.05) 100%)`
                       }}
                     >
-                      <img
-                        src={giveaway.item.image}
-                        alt={giveaway.item.name}
+                      <SkinImage
+                        name={giveaway.item.name}
+                        image={giveaway.item.image}
                         className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
-                        loading="lazy"
-                        onError={(e) => {
-                          const img = e.currentTarget;
-                          if (img.dataset.fallbackApplied === 'true') return;
-                          img.dataset.fallbackApplied = 'true';
-                          img.src = '/placeholder.svg';
-                        }}
                       />
                     </div>
 
@@ -253,6 +247,7 @@ const Sorteios = () => {
                             src={giveaway.winner.avatar}
                             alt={giveaway.winner.name}
                             className="w-6 h-6 rounded-full"
+                            referrerPolicy="no-referrer"
                             onError={(e) => {
                               const img = e.currentTarget;
                               if (img.dataset.fallbackApplied === 'true') return;
